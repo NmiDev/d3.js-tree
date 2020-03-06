@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Tree Diagram</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="src/styles/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+    <div class="pink section">
+        <h2 class="white-text center">Company</h2>
+    </div>
+
+    <div class="grey lighten-3 section grey-text" style="position: relative;">
+        <p class="flow-text center">Employees organizational chart</p>
+        <a href="#modal" class="btn-floating btn-large halfway-fab pink modal-trigger"><i class="material-icons">add</i></a>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h4 class="pink-text center">Add new employee</h4>
+            <form>
+                <div class="input-field">
+                    <input type="text" id="name" placeholder="Employee name">
+                </div>
+                <div class="input-field">
+                    <input type="text" id="parent" placeholder="Report to">
+                </div>
+                <div class="input-field">
+                    <input type="text" id="department" placeholder="Department">
+                </div>
+                <div class="input-field">
+                    <button class="btn pink white-text">Add employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="canvas"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBBMeA9zEFk_SnT9Na3WckLxddoO6qLzdU",
+            authDomain: "dataviz-d3js-d251c.firebaseapp.com",
+            databaseURL: "https://dataviz-d3js-d251c.firebaseio.com",
+            projectId: "dataviz-d3js-d251c",
+            storageBucket: "dataviz-d3js-d251c.appspot.com",
+            messagingSenderId: "839999682297",
+            appId: "1:839999682297:web:a1de7dbfc83a30ab90d428",
+            measurementId: "G-JE17D197VY"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // Database
+        const db = firebase.firestore();
+    </script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="src/js/app.js"></script>
+</body>
+</html>
