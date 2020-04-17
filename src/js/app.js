@@ -22,6 +22,7 @@ const app = {
     svg: null,
     graph: null,
     stratify: null,
+    colorScale: null,
 
     // App init
     init: function() {
@@ -116,17 +117,35 @@ const app = {
             .attr('height', app.dims.graphHeight)
             .attr('transform', `translate(${app.dims.marginLeft}, ${app.dims.marginTop})`);
 
-        // Data straity
+        // Ordinal scale
+        app.colorScale = d3.scaleOrdinal()
+            .range(d3.schemeDark2)
+
+        // Data stratufy
         app.stratify = d3.stratify()
             .id(d => d.name)
             .parentId(d => d.parent);
     },
 
     updateGraph: function(data) {
+        // Remove current nodes and links
+        app.graph.selectAll('.node').remove();
+        app.graph.selectAll('.link').remove();
+
+        // Update scale
+        const colorDomain = [];
+
+        for (const elt of data) {
+            colorDomain.push(elt.department);
+        }
+        
+        app.colorScale
+            .domain(new Set(colorDomain));
+
         // Stratify data
         const rootNodes = app.stratify(data);
 
-        // Tree
+        // Tree data
         const tree = d3.tree()
             .size([app.dims.graphWidth, app.dims.graphHeight]);
 
@@ -136,6 +155,22 @@ const app = {
         const nodes = app.graph.selectAll('.node')
             .data(treeData.descendants());
 
+        // Get links selection and join datas
+        const links = app.graph.selectAll('.link')
+            .data(treeData.links());
+
+        const enterLinks = links
+            .enter()
+            .append('path')
+            .attr('class', 'link')
+            .attr('fill', 'none')
+            .attr('stroke', '#aaa')
+            .attr('stroke-width', 2)
+            .attr('d', d3.linkVertical()
+                .x(d => d.x)
+                .y(d => d.y)
+            );
+
         const enterNodes = nodes
             .enter()
             .append('g')
@@ -144,11 +179,15 @@ const app = {
 
         enterNodes
             .append('rect')
-            .attr('fill', '#aaa')
+            .attr('fill', d => app.colorScale(d.data.department))
             .attr('stroke', '#555')
             .attr('stroke-width', '2px')
             .attr('width', d => d.data.name.length * 20)
             .attr('height', 50)
+            .attr('transform', d => {
+                const x = d.data.name.length * 20;
+                return `translate(${-x/2}, -32)`
+            })
 
         enterNodes
             .append('text')
