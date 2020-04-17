@@ -133,11 +133,7 @@ const app = {
         app.graph.selectAll('.link').remove();
 
         // Update scale
-        const colorDomain = [];
-
-        for (const elt of data) {
-            colorDomain.push(elt.department);
-        }
+        const colorDomain = data.map(item => item.department);
         
         app.colorScale
             .domain(new Set(colorDomain));
