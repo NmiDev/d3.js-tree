@@ -51,14 +51,14 @@
     <script>
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "APIKEY",
-            authDomain: "AUTHDOMAIN",
-            databaseURL: "TESTURL",
-            projectId: "PROJECTID",
-            storageBucket: "PROJECTBUCKET",
-            messagingSenderId: "ID",
-            appId: "APPID",
-            measurementId: "MESUREID"
+            apiKey: firebaseConfigEnv.apiKey,
+            authDomain: firebaseConfigEnv.authDomain,
+            databaseURL: firebaseConfigEnv.databaseURL,
+            projectId: firebaseConfigEnv.projectId,
+            storageBucket: firebaseConfigEnv.storageBucket,
+            messagingSenderId: firebaseConfigEnv.messagingSenderId,
+            appId: firebaseConfigEnv.appId,
+            measurementId: firebaseConfigEnv.measurementId
         };
         
         // Initialize Firebase
